@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/my-profile.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="https://kit.fontawesome.com/20b3968387.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="navbar-main">
+            <div class="brand">
+                <h2>elpis
+                </h2>
+            </div>
+            <div class="list">
+                <ul>
+                    <li class="responsive">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="responsive">
+                        <a href="">About Us</a>
+                    </li>
+                </ul>
+                <% if(typeof user!='undefined' ){ %>
+                    <li class="bottles">
+                        <a href="/my-profile">
+                            <i class="fa-solid fa-bottle-water"><sup id="mybottle">
+                                    <%= botl %>
+                                </sup></i>
+                        </a>
+
+                    </li>
+                    <% } %>
+                        <li class="open-btn" id="open-btn">
+                            <i class="fa-solid fa-bars"></i>
+                        </li>
+            </div>
+        </div>
+    </nav>
+
+
+    <section>
+        <div class="container">
+            <div class="row g-2">
+                <div class="col-md-3">
+                    <div class="profile">
+                        <img src="/img/empty.png" class="img-fluid">
+                        <h3>
+                            <%= user.username %>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row g-3">
+
+                        <% if (cupons){ %>
+                            <% cupons.forEach(function(cupon) { %>
+
+                                <div class="col-lg-6 col-sm-12">
+                                    <div id="cards">
+                                        <div class="card-item">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="details">
+                                                        <h2>
+                                                            <%= cupon.title %>
+                                                        </h2>
+                                                        <div class="stars">
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                        </div>
+
+                                                        <p>
+                                                            <%= cupon.article %>
+                                                        </p>
+
+
+
+                                                        <div class="control">
+                                                            <form action="" method="get">
+
+                                                                <button class="btn-cafe" type="submit">
+                                                                    <span class="price"><i
+                                                                            class="fa-solid fa-bottle-water"> 10
+                                                                        </i></span>
+                                                                    <span class="shopping-cart"><i
+                                                                            class="fa fa-shopping-cart"
+                                                                            aria-hidden="true"></i></span>
+                                                                    <span class="buy">Get now</span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="card-image">
+
+                                                        <img src="data:/<%=cupon.cuponImage.mimetype%>;base64,
+                    <%=cupon.cuponImage.data.toString('base64')%>" class="img-fluid" alt="">
+                                                        <div class="cafe-info">
+                                                            <h3>Description</h3>
+                                                            <ul>
+                                                                <li><strong>Height : </strong>5 Ft </li>
+                                                                <li><strong>Shade : </strong>Olive green</li>
+                                                                <li><strong>Decoration: </strong>balls and bells</li>
+                                                                <li><strong>Material: </strong>Eco-Friendly</li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% }) %>
+                                    <% } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <footer class="footer ">
+        <div class="copyright text-center">
+            <p>&copy; 2022 | All Rights Reserved</p>
+        </div>
+        <div class="credit text-center">
+            <p>Designed & Developed by Ilkin Babayev
+            </p>
+        </div>
+    </footer>
+
+
+
+
+    <!-- <section id="cards">
+        <div class="container">
+            <div class="cards">
+                <div class="row g-5">
+                    <% if (cupons){ %>
+                        <% cupons.forEach(function(cupon) { %>
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="details">
+                                                <h2>
+                                                    <%= cupon.title %>
+                                                </h2>
+                                                <div class="stars">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </div>
+
+                                                <p>
+                                                    <%= cupon.article %>
+                                                </p>
+
+
+
+                                                <div class="control">
+                                                    <form action="/<%=cupon.id%>" method="get">
+
+                                                        <button class="btn-cafe" type="submit">
+                                                            <span class="price"><i class="fa-solid fa-bottle-water">
+                                                                    10
+                                                                </i></span>
+                                                            <span class="shopping-cart"><i class="fa fa-shopping-cart"
+                                                                    aria-hidden="true"></i></span>
+                                                            <span class="buy">Get now</span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card-image">
+
+                                                <img src="data:/<%=cupon.cuponImage.mimetype%>;base64,
+                                    <%=cupon.cuponImage.data.toString('base64')%>" class="img-fluid" alt="">
+                                                <div class="cafe-info">
+                                                    <h3>Description</h3>
+                                                    <ul>
+                                                        <li><strong>Height : </strong>5 Ft </li>
+                                                        <li><strong>Shade : </strong>Olive green</li>
+                                                        <li><strong>Decoration: </strong>balls and bells
+                                                        </li>
+                                                        <li><strong>Material: </strong>Eco-Friendly</li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } %>
+                </div>
+            </div>
+        </div>
+
+    </section> -->
+
+
+    <script src="js/profile.js"></script>
+
+
+</body>
+
+</html>

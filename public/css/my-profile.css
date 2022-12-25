@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bree+Serif&family=EB+Garamond:ital,wght@0,500;1,800&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+.navbar-main {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 120px;
+}
+
+.navbar-main .brand {
+    color: black;
+    font-size: 35px;
+}
+
+.navbar-main .list {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-main .list ul li {
+    display: inline-block;
+}
+
+.navbar-main .list ul li a {
+    text-decoration: none;
+    color: black;
+    padding: 5px 15px;
+    font-size: 20px;
+}
+
+.navbar-main .bottles {
+    list-style: none;
+    display: inline-block;
+}
+
+.navbar-main .bottles a {
+    width: 100%;
+    height: 100%;
+}
+
+.navbar-main .open-btn {
+    list-style: none;
+    display: none;
+}
+
+.navbar-main .open-btn i {
+    font-size: 40px;
+}
+
+.navbar-main .bottles {
+    list-style: none;
+    display: inline-block;
+}
+
+.navbar-main .bottles a {
+    width: 100%;
+    height: 100%;
+}
+
+.navbar-main .open-btn {
+    list-style: none;
+    display: none;
+    margin-left: 10px;
+}
+
+
+.navbar-main .bottles a i {
+    font-size: 30px;
+    color: black;
+}
+
+.navbar-main .bottles a i sup {
+    font-size: 15px;
+}
+
+.profile h3 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#cards {
+    overflow-x: hidden;
+}
+
+#cards .card-item {
+    border-radius: 10px;
+    height: 100%;
+}
+
+#cards .card-item .details {
+    padding: 20px;
+    min-height: 370px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#cards .card-item .details h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+#cards .card-item .details .stars i {
+    color: gold;
+    margin-bottom: 10px;
+}
+
+#cards .card-item .details p {
+    font-family: "EB Garamond", serif;
+    font-size: 18px;
+    color: #7d7d7d;
+    margin-bottom: 10px;
+}
+
+.btn-cafe {
+    transform: translateY(0px);
+    transition: 0.3s ease-in;
+    background: #809fff;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    color: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+.btn-cafe:hover {
+    transform: translateY(-6px);
+    background: #1a66ff;
+}
+
+.btn-cafe span {
+    font-family: "Farsan", cursive;
+    transition: transform 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.btn-cafe .price,
+.shopping-cart {
+    background: #333;
+    border: 0;
+    margin: 0;
+}
+
+.btn-cafe .price {
+    transform: translateX(-10%);
+    padding-right: 15px;
+}
+
+.btn-cafe .shopping-cart {
+    transform: translateX(-100%);
+    position: absolute;
+    background: #333;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+
+.btn-cafe .buy {
+    z-index: 3;
+    font-weight: bolder;
+}
+
+.btn-cafe:hover .price {
+    transform: translateX(-110%);
+}
+
+.btn-cafe:hover .shopping-cart {
+    transform: translateX(0%);
+}
+
+#cards .card-item .card-image {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+#cards .card-item .card-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: 0.3s ease-in;
+}
+
+#cards .card-item .card-image:hover img {
+    transform: scale(1.1);
+}
+
+#cards .card-item .card-image .cafe-info {
+    position: absolute;
+    top: 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0;
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: 0.3s ease-in;
+}
+
+#cards .card-item .card-image .cafe-info h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+#cards .card-item .card-image .cafe-info ul li {
+    padding: 5px 0;
+    transition: 0.2s ease-in;
+}
+
+#cards .card-item .card-image .cafe-info ul li:hover {
+    transform: scale(1.2);
+}
+
+#cards .card-item .card-image:hover .cafe-info {
+    transform: translateX(0);
+}
+
+.card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.content {
+    opacity: 1.1;
+    text-align: center;
+}
+
+
+.footer {
+    background-color: #1b1b1b;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.footer .copyright p {
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.footer .credit p {
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-main .open-btn {
+        display: inline-block;
+    }
+
+    .navbar-main .list ul {
+        transition: transform .7s ease-in;
+        position: absolute;
+        background: white;
+        width: 100%;
+        top: 83px;
+        left: 50%;
+        text-align: center;
+        transform: translateX(100%);
+    }
+
+    .navbar-main .list ul .responsive {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .hero p {
+        width: 70%;
+    }
+
+}
+
+
+@media screen and (max-width: 576px) {
+    .navbar-main {
+        padding: 10px;
+    }
+
+    .navbar-main .brand h2 {
+        font-size: 40px;
+    }
+
+    .navbar-main .list ul {
+        top: 75px;
+    }
+
+}

@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <title>elpis</title>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 
 </head>
 
@@ -20,35 +20,45 @@
     <nav>
         <div class="navbar-main">
             <div class="brand">
-                <h2>elpis
-                </h2>
+                <h2>elpis</h2>
             </div>
             <div class="list">
-                <ul>
-                    <li>
+                <ul class="active-menu">
+                    <li class="responsive">
                         <a href="">Home</a>
                     </li>
-                    <li>
+                    <li class="responsive">
                         <a href="">About Us</a>
                     </li>
-                    <li>
-                        <a href="/login">Login</a>
-                    </li>
-                    <li>
-                        <a href="/register">Register</a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa-solid fa-bottle-water"> <sup id="mybottle">12</sup></i>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <div class="account">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                    </li>
-
+                    <% if(typeof user==='undefined' ) { %>
+                        <li class="responsive">
+                            <a href="/login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register">Register</a>
+                        </li class="responsive">
+                        <% } %>
                 </ul>
+                <% if(typeof user!='undefined' ){ %>
+                    <li class="bottles">
+                        <a href="/my-profile">
+                            <i class="fa-solid fa-bottle-water"><sup id="mybottle">
+                                    <%= botl %>
+                                </sup></i>
+                        </a>
+
+                    </li>
+                    <% } %>
+                        <li class="dropdown">
+                            <div class="account">
+                                <i class="fa-regular fa-user"></i>
+                            </div>
+                        </li>
+                        <li class="open-btn" id="open-btn">
+                            <i class="fa-solid fa-bars"></i>
+                        </li>
+
+
             </div>
         </div>
     </nav>
@@ -56,7 +66,7 @@
         <ul>
             <li>
                 <i class="fa-regular fa-user"></i>
-                <a href="">My Profile</a>
+                <a href="/my-profile">My Profile</a>
             </li>
             <li>
                 <i class="fa-regular fa-pen-to-square"></i>
@@ -70,58 +80,88 @@
     </div>
 
     <div class="hero">
+        <h2>Istesen Soz Yazmaga yer</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius earum voluptatibus consequatur deserunt tenetur
+            ad sed porro non? Alias, odit. Non commodi vitae ea quos sunt, saepe cum doloribus inventore.</p>
 
     </div>
-    <div class="card">
-        <div id="container">
 
-            <div class="product-details">
-
-                <h1>Araz Cafe</h1>
-                <span class="hint-star star">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                </span>
-
-                <p class="information">"Bridge Plaza -nın birinci mərtəbəsində yerləşən Bridge cafe -nin artıq çoxdan
-                    çoxsylı daimi müştəriləri formalaşıb. Bu səbəbsiz deyil. Burada istirahət günləri sevimli filmlərə
-                    baxmaqla yanaşı, məkanın əla menyusundan zövq ala bilərsiniz.</p>
+    <section id="cards">
 
 
+        <div class="container">
+            <div class="cards">
+                <div class="row g-5">
+                    <% if (cupons){ %>
+                        <% cupons.forEach(function(cupon) { %>
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="card-item">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="details">
+                                                <h2>
+                                                    <%= cupon.title %>
+                                                </h2>
+                                                <div class="stars">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </div>
 
-                <div class="control">
+                                                <p>
+                                                    <%= cupon.article %>
+                                                </p>
 
-                    <button class="btn-cafe">
-                        <span class="price"><i class="fa-solid fa-bottle-water"> 10 </i></span>
-                        <span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                        <span class="buy">Get now</span>
-                    </button>
 
+
+                                                <div class="control">
+                                                    <form action="/<%=cupon.id%>" method="get">
+
+                                                        <button class="btn-cafe" type="submit">
+                                                            <span class="price"><i class="fa-solid fa-bottle-water"> 10
+                                                                </i></span>
+                                                            <span class="shopping-cart"><i class="fa fa-shopping-cart"
+                                                                    aria-hidden="true"></i></span>
+                                                            <span class="buy">Get now</span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card-image">
+
+                                                <img src="data:/<%=cupon.cuponImage.mimetype%>;base64,
+                    <%=cupon.cuponImage.data.toString('base64')%>" class="img-fluid" alt="">
+                                                <div class="cafe-info">
+                                                    <h3>Description</h3>
+                                                    <ul>
+                                                        <li><strong>Height : </strong>5 Ft </li>
+                                                        <li><strong>Shade : </strong>Olive green</li>
+                                                        <li><strong>Decoration: </strong>balls and bells</li>
+                                                        <li><strong>Material: </strong>Eco-Friendly</li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } %>
                 </div>
-
             </div>
-
-            <div class="product-image">
-
-                <img src="img/the-bridge-cafe-1.png">
-                <div class="info">
-                    <h2> Description</h2>
-                    <ul>
-                        <li><strong>Height : </strong>5 Ft </li>
-                        <li><strong>Shade : </strong>Olive green</li>
-                        <li><strong>Decoration: </strong>balls and bells</li>
-                        <li><strong>Material: </strong>Eco-Friendly</li>
-
-                    </ul>
-                </div>
-            </div>
-
         </div>
 
-        <div id="container">
+    </section>
+
+
+
+    <!-- <div id="container">
 
             <div class="product-details">
 
@@ -134,7 +174,8 @@
                     <i class="fa fa-star-o" aria-hidden="true"></i>
                 </span>
 
-                <p class="information">Background music, Breakfast, Business lunch, Delivery, Drinks, Hookah, Reception
+                <p class="information">Background music, Breakfast, Business lunch, Delivery, Drinks, Hookah,
+                    Reception
                     of banquets, Tables reservation, Take Away, VIP room, Wi-Fi</p>
 
 
@@ -258,17 +299,14 @@
                     </ul>
                 </div>
             </div>
+        </div> -->
+    <section id="scanner" class="bg-light">
+        <h2 class="scan-h2">Scan et ve botl qazan</h2>
+        <div class="scanner">
+            <div id="reader" class="Html5Qrcode"></div>
+            <div id="result"></div>
         </div>
-
-
-
-
-    </div>
-    <h2 class="scan-h2">Scan et ve botl qazan</h2>
-    <div class="scanner">
-        <div id="reader" class="Html5Qrcode"></div>
-        <div id="result"></div>
-    </div>
+    </section>
 
 
     <h2 class="about-h2">About</h2>
@@ -312,8 +350,8 @@
                 <div class="about-card-header">
                     <img src="https://images6.alphacoders.com/312/thumb-1920-312773.jpg" alt="city" />
                 </div>
-                <div class="card-body">
-                    <span class="tag tag-pink">Design</span>
+                <div class="about-card-body">
+                    <span class="tag tag-purple">Design</span>
                     <h4>
                         10 Rules of Dashboard Design
                     </h4>
@@ -333,7 +371,8 @@
                 <h2>Contact Us</h2>
                 <span class="line"></span>
                 <p>
-                    Fill contact form and tell us about problems you have faced on our site or your suggestions.
+                    Fill contact form and tell us about problems you have faced on
+                    our site or your suggestions.
                     We will develop with your thoughts.
                 </p>
             </div>
@@ -412,8 +451,10 @@
         })
         scanner.render(success, error);
         function success(result) {
-            console.log(result)
-            document.getElementById(result).innerHTML = 17;
+            botl = botl + 5
+            console.log(botl)
+
+
             document.getElementById("result").innerHTML = "<h2 style='color:green'>Bootle ugurla elave edildi</h2>";
 
         }
@@ -439,6 +480,7 @@
 
     <script src="https://kit.fontawesome.com/0dc52230ad.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
+    <script type="module" src="app.js"></script>
 
 </body>
 

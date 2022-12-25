@@ -1,18 +1,23 @@
 const express = require("express")
 const ejs = require("ejs");
-const app = express();
+
 const mongoose = require("mongoose");
+
+const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require("passport-local-mongoose");
-const session = require('express-session');
+const fs = require('fs');
+const { dirname } = require("path");
+var ObjectId = require('mongodb').ObjectID;
 
+const app = express();
+app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + "/public"))
-app.use(express.static(__dirname + "public"))
 app.use(express.urlencoded({ extended: true }));
 app.use(session(
     {
-        secret: 'mySecret', resave: false, saveUninitialized: false,
+        secret: 'my', resave: false, saveUninitialized: false,
     }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -20,10 +25,34 @@ app.use(passport.session());
 mongoose.set('strictQuery', false)
 mongoose.connect("mongodb://127.0.0.1:27017/recycleDB", { useNewUrlParser: true });
 
+const cuponSchema = new mongoose.Schema({
+    title: String,
+    article: String,
+    cuponImage: {
+        data: Buffer,
+        contentType: String
+    }
+})
+const Cupon = new mongoose.model("Cupon", cuponSchema)
+
+
+// newcupon = Cupon({
+//     title: "Araz Cafe",
+//     article: "Bridge Plaza - nın birinci mərtəbəsində yerləşən Bridge cafe - nin artıq çoxdan çoxsaylı daimi müştəriləri formalaşıb.Bu səbəbsiz deyil.Burada istirahət günləri sevimli filmlərə baxmaqla yanaşı, məkanın əla menyusundan zövq ala bilərsiniz",
+//     cuponImage: {
+//         data: fs.readFileSync(__dirname + "/public/img/araz.jpg"),
+//         contentType: 'image/png'
+//     }
+
+
+
+
+
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
-    bottle: Number
+    bottle: Number,
+    cuponum: [cuponSchema]
 
 })
 userSchema.plugin(passportLocalMongoose);
@@ -45,15 +74,53 @@ app.get('/logout', function (req, res) {
 });
 
 app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/views/index.html")
+    Cupon.find(function (err, result) {
+        const bottle = req.session.bottle;
+        res.render(__dirname + "/views/index", { cupons: result, botl: bottle, user: req.user })
+    })
+
+
+})
+
+
+
+
+app.get("/my-profile", function (req, res) {
+    if (!req.user) {
+        res.redirect("/login")
+    }
+    const bottle = req.session.bottle;
+    const profileCupon = req.user.cuponum;
+    res.render(__dirname + "/views/my-profile", { cupons: profileCupon, user: req.user, botl: bottle })
 
 })
 app.get("/login", function (req, res) {
-    res.sendFile(__dirname + "/views/login.html")
+    res.render(__dirname + "/views/login")
 });
 app.get("/register", function (req, res) {
-    res.sendFile(__dirname + "/views/register.html")
+    res.render(__dirname + "/views/register")
 });
+
+app.get("/:cuponid", function (req, res) {
+
+    const cuponid = req.params.cuponid.trim();
+    if (!req.user) {
+        res.redirect("/login");
+    } else {
+        Cupon.findById(ObjectId(cuponid), function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                User.updateOne({ _id: ObjectId(req.user._id) }, { $push: { cuponum: result } }, function (err, doc) {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+                res.redirect("/")
+            }
+        })
+    }
+})
 
 
 app.post("/register", (req, res) => {
@@ -63,7 +130,20 @@ app.post("/register", (req, res) => {
             res.redirect("/register")
         } else {
             passport.authenticate("local")(req, res, function () {
-                res.redirect("/");
+                User.updateOne({ username: user.username }, { bottle: 0 }, function (err, result) {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+                User.findOne({ username: user.username }, function (err, userim) {
+                    if (err) {
+                        res.redirect("/register")
+                    }
+                    req.session.bottle = userim.bottle;
+
+                })
+
+                res.redirect("/")
             })
         }
     })
@@ -91,7 +171,8 @@ app.post("/login", (req, res) => {
                                     if (err) {
                                         console.log(err);
                                     } else {
-                                        res.redirect("/");
+                                        req.session.bottle = u.bottle;
+                                        res.redirect("/",);
                                     }
                                 });
                             }

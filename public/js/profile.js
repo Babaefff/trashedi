@@ -1,8 +1,4 @@
-const account = document.querySelector(".dropdown")
 const open = document.getElementById("open-btn")
-account.addEventListener("click", function () {
-    document.querySelector(".dropdown-content").classList.toggle("active")
-})
 open.addEventListener("click", function () {
     const responsive_list = document.querySelector(".navbar-main .list ul")
 
