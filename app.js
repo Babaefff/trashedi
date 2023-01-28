@@ -25,7 +25,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set('strictQuery', false)
-mongoose.connect("mongodb://127.0.0.1:27017/recycleDB", { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://babaef:ronaldoo123@cluster0.yljpnc2.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 const cuponSchema = new mongoose.Schema({
     title: String,
