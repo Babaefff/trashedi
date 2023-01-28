@@ -2,6 +2,7 @@ const express = require("express")
 const ejs = require("ejs");
 
 const mongoose = require("mongoose");
+const port = process.env.PORT || 5000;
 
 const session = require('express-session');
 const passport = require('passport');
@@ -9,6 +10,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const fs = require('fs');
 const { dirname } = require("path");
 var ObjectId = require('mongodb').ObjectID;
+
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -190,6 +192,6 @@ app.post("/login", (req, res) => {
 
 
 
-app.listen(3000, function (err) {
+app.listen(port, function (err) {
     console.log("server running")
 })
